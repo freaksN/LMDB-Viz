@@ -6,4 +6,7 @@ The data is coming direclty from the Linked Movie Database SPARQL-Endpoint.
 The User also has the option to switch between views the results. Types of visualization: (Tables, Graph, Charts.)
 
 
+Online access to the App is granted here: https://freaksn.github.io/LMDB-Viz/
+
+
 
