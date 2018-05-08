@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { FormControl, Button, FormGroup, Popover} from 'react-bootstrap';
 
-import FaBars from 'react-icons/lib/fa/bars';
+import {FaBars, FaSearch} from 'react-icons/lib/fa';
+
 
 
 // TO DO
@@ -21,7 +22,7 @@ import FaBars from 'react-icons/lib/fa/bars';
 //           .endpointURL("http://data.linkedmdb.org/sparql")
 //           .endpointOutputFormat("jsonp") 
 //           .chartFunction("google.visualization.WordTree")
-//           .chartWidth(1100)
+//           (1100)
 //           .chartHeight(1100)
 //           .draw("searchResults");
  
@@ -361,7 +362,7 @@ D.query( " SELECT DISTINCT  ?directorName ?Name_Of_The_Directed_Movie WHERE { ?d
  .endpointOutputFormat("jsonp")
  .chartFunction("sgvizler.visualization.D3ForceGraph")
  .chartWidth(1100)
- .chartHeight(450)
+ .chartHeight(650)
  .draw("searchResults");
  
  D.getDataTable(function(x) { var r = x.getNumberOfRows()
@@ -420,7 +421,7 @@ D.query( " SELECT ?Name_Of_The_Directed_Movie (COUNT(?Name_Of_The_Directed_Movie
  .endpointOutputFormat("jsonp")
  .chartFunction("google.visualization.PieChart")
  .chartWidth(1100)
- .chartHeight(450)
+ .chartHeight(650)
  .draw("searchResults");
  
  D.getDataTable(function(x) { var r = x.getNumberOfRows()
@@ -574,8 +575,8 @@ D.query( " SELECT ?Name_Of_The_Directed_Movie (COUNT(?Name_Of_The_Directed_Movie
       .endpointURL("http://data.linkedmdb.org/sparql")
       .endpointOutputFormat("jsonp") 
       .chartFunction("sgvizler.visualization.D3ForceGraph")
-      .chartWidth(1100)
-      .chartHeight(450)
+      (1200)
+      .chartHeight(650)
       .draw("searchResults");
 
 
@@ -666,7 +667,7 @@ actorsGraph() {
         .chartFunction("sgvizler.visualization.D3ForceGraph")
         // !!WORKING FURTHER VISUALIZATION .chartFunction("google.visualization.OrgChart") !!
         .chartWidth(1100)
-        .chartHeight(450)
+        .chartHeight(650)
         .draw("searchResults");
 
           // hide/show elements
@@ -730,7 +731,7 @@ actorsGraph() {
           .endpointOutputFormat("jsonp") 
           .chartFunction("sgvizler.visualization.D3ForceGraph")
           .chartWidth(1100)
-          .chartHeight(450)
+          .chartHeight(650)
           .draw("searchResults");
 
 
@@ -755,7 +756,7 @@ actorsGraph() {
           .endpointOutputFormat("jsonp") 
           .chartFunction("google.visualization.Sankey")
           .chartWidth(1100)
-          .chartHeight(450)
+          .chartHeight(650)
           .draw("searchResults");
 
 
@@ -823,7 +824,7 @@ actorsGraph() {
               .endpointOutputFormat("jsonp") 
               .chartFunction("sgvizler.visualization.D3ForceGraph")
               .chartWidth(1100)
-              .chartHeight(450)
+              .chartHeight(650)
               .draw("searchResults");
               }  
           this.setState({ hideMovies: true });
@@ -889,7 +890,7 @@ actorsGraph() {
               .endpointOutputFormat("jsonp") 
               .chartFunction("sgvizler.visualization.D3ForceGraph")
               .chartWidth(1100)
-              .chartHeight(450)
+              .chartHeight(650)
               .draw("searchResults");
               }  
           this.setState({ hideMovies: true });
@@ -954,7 +955,7 @@ actorsGraph() {
               .endpointOutputFormat("jsonp") 
               .chartFunction("sgvizler.visualization.D3ForceGraph")
               .chartWidth(1100)
-              .chartHeight(450)
+              .chartHeight(650)
               .draw("searchResults");
               }  
           this.setState({ hideMovies: true });
@@ -1020,7 +1021,7 @@ if (fAOD !== '') {
           .endpointOutputFormat("jsonp") 
           .chartFunction("sgvizler.visualization.D3ForceGraph")
           .chartWidth(1100)
-          .chartHeight(450)
+          .chartHeight(650)
           .draw("searchResults");
 
           ADG.getDataTable(function(x) { x.getNumberOfRows()
@@ -1063,7 +1064,7 @@ if (fAOD !== '') {
           .endpointOutputFormat("jsonp") 
           .chartFunction("google.visualization.ColumnChart")
           .chartWidth(1100)
-          .chartHeight(450)
+          .chartHeight(650)
           .draw("searchResults");
 
           ADG.getDataTable(function(x) { x.getNumberOfRows()
@@ -1129,8 +1130,8 @@ if (fAOD !== '') {
         <option value="favoriteActor">Favorite Actor of Director</option>
 
       </FormControl>
-      <Button className="SearchBtn" type="submit" bsStyle="success">Search</Button>
-      </FormGroup>
+      <Button className="SearchBtn" type="submit" bsStyle="default" style={{color:"black", background:"#e6e610"}}>Search <FaSearch /></Button>
+      </FormGroup> 
       
       </form>
       { this.state.ResultsToolTip ?
@@ -1160,25 +1161,25 @@ if (fAOD !== '') {
         {/* Buttons for Graph/Table?Charts Visualization */}
 
        { this.state.showButtonGraph ? 
-       <Button className="showGraph" type="submit" bsStyle="info" onClick={this.buttonsVisualizationsGraphs}>See results as Graph </Button>
+       <Button className="showGraph" type="submit" bsStyle="default" style={{ background:"#a61ea9", color:"#ccccb3"}} onClick={this.buttonsVisualizationsGraphs}>See results as Graph </Button>
       : null
       }
       
         {/* Buttons for Graph/Table/Charts Visualization */}
 
       { this.state.showButtonTable ? 
-      <Button className="showTable" type="submit" bsStyle="info" onClick={this.buttonsVisualizationsTables}>See results as Table </Button>
+      <Button className="showTable" type="submit" bsStyle="default" style={{ background:"#a61ea9", color:"#ccccb3"}} onClick={this.buttonsVisualizationsTables}>See results as Table </Button>
       : null
       }   
 
         {/* Buttons for Graph/Table/Charts Visualization */}
 
       { this.state.showButtonCharts ? 
-      <Button className="showChart" type="submit" bsStyle="info" onClick={this.buttonsVisualizationsCharts}>See results as Chart </Button>
+      <Button className="showChart" type="submit" bsStyle="default" style={{ background:"#a61ea9", color:"#ccccb3"}} onClick={this.buttonsVisualizationsCharts}>See results as Chart </Button>
       : null
       }   
       { this.state.clearButton ? 
-      <Button className="clearButton" type="submit" bsStyle="danger" onClick={this.clearButton} > Delete results </Button>
+      <Button className="clearButton" type="submit" bsStyle="default" style={{ background:"red", color:"#ccccb3"}} onClick={this.clearButton} > Delete results </Button>
       : null
       }
        
