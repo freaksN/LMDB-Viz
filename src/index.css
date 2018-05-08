@@ -1,9 +1,31 @@
+.App {
+  font-family: Roboto;
+  background:#1e2b4d ;
+}
+html {
+  background:#1e2b4d ;
+}
+
+p {
+  color: #ccccb3;
+  font-size: 13pt;
+}
+
+#formSearch input, #formSearch select  {
+  background: #f1f1f1;
+}
+
+
+
+
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
   margin-bottom:15px;
 }
+
 
 table, th, td {
   border: 1px solid #88ff80;
@@ -14,8 +36,12 @@ table, th, td {
 }
 
 
+th {
+  color: #ffffe5;
+}
 td {
   padding: 10px;
+  color: #ccccb3;
   
 }
 
@@ -54,7 +80,7 @@ margin-top: 5%;
 }
 
 div #searchResults {
-  border: 1px solid #f3f3f3e0;
+  border: 1px transparent #f3f3f3e0;
 }
 
 
@@ -81,23 +107,36 @@ margin-left: 70%;
 margin-bottom: 1%;
 
 }
+
 .SearchBtn {
 margin-left: 8px;
 }
 
+
+
+.popButton {
+background: #e6e610;
+}
+
 #popover-menu{
-  background: #fafafa;
+  background: #1e2b4d;
   border: 5px solid #ccccb3;
   text-align: center;
-  
+  font-family: Roboto;
+}
+
+
+#popover-menu h3{
+  color: #ccccb3;
+
 }
 
 #popover-positioned-top {
-  background:#b3ffb3
+  background:#3fcf3f
  }
 
  #popover-positioned-bottom {
-background: #ff704d;
+background: #d1360f;
  }
 
 /* div.popover-content  */
