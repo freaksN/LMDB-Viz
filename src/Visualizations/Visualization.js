@@ -917,7 +917,7 @@ actorsGraph() {
 
           //  hide/show elements
           this.setState({ hideMovies: true});
-          this.setState({clearButton: true});
+          this.setState({ clearButton: true});
           this.setState({ showButtonGraph: false });
           this.setState({ showButtonTable: true });     
           this.setState({ showButtonCharts: true });
@@ -1237,19 +1237,6 @@ if (fAOD !== '') {
           .chartHeight(650)
           .draw("searchResults");
 
-          ADG.getDataTable(function(x) { x.getNumberOfRows()
-            if (x.getNumberOfRows() < 1) {
-              this.setState({ Tooltip: true });
-              this.setState({ hideMovies: false });
-              this.setState({ showButtonGraph: false });
-              this.setState({ showButtonTable: false });
-              this.setState({ clearButton: false });
-              this.setState({ ResultsToolTip: false });
-            }  else {
-              this.setState({ Tooltip: false });
-            }
-          
-          }.bind(this));
     }  
       this.setState({ hideMovies: true });
       this.setState({ showButtonGraph: false });
@@ -1280,19 +1267,6 @@ if (fAOD !== '') {
               .chartHeight(650)
               .draw("searchResults");
 
-          ADC.getDataTable(function(x) { x.getNumberOfRows()
-            if (x.getNumberOfRows() < 1) {
-              this.setState({ Tooltip: true });
-              this.setState({ hideMovies: false });
-              this.setState({ showButtonGraph: false });
-              this.setState({ showButtonTable: false });
-              this.setState({ clearButton: false });
-              this.setState({ ResultsToolTip: false });
-            }  else {
-              this.setState({ Tooltip: false });
-            }
-          
-          }.bind(this));
     }  
       this.setState({ hideMovies: true });
       this.setState({ showButtonGraph: true });
