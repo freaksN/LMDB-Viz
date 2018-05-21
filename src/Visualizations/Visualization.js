@@ -931,8 +931,6 @@ actorXactorChart() {
  
     //Initialize sgvizler Query for All Actors that have played with X actor Graph/Table
 
-    console.log(actorXActorSearch);
-
     var GC = new window.sgvizler.Query();
 
     //Word Tree
@@ -1198,6 +1196,7 @@ if (fAOD !== '') {
               this.setState({ hideMovies: false });
               this.setState({ showButtonGraph: false });
               this.setState({ showButtonTable: false });
+              this.setState({ showButtonCharts: false });
               this.setState({ clearButton: false });
               this.setState({ ResultsToolTip: false });
               this.setState({ download: false});
@@ -1332,7 +1331,6 @@ if (fAOD !== '') {
     </Popover>
   : null
   }
-
       {/* <div className="Jumbotron">
       <img src={kinoSalon} alt="Kino Salon" id="kinoSalon"/>
       <img src={entrance} alt="Kino entrance" id="michigan"/>
@@ -1346,7 +1344,6 @@ if (fAOD !== '') {
       
       <p className="Introduction">LMDB-Viz is an app for movie information with many possible visualizations. You can directly press "Go" or choose another category and <br /> order in the field below to see a demo. </p>
       <div className="InteractiveSearch">
-
 <form className="form-inline" id='formInteractive' onSubmit={this.interactiveSearchSubmit}>
       <FormGroup>  
       <FormControl componentClass="select" inputRef={(ref) => {this.interactiveSearchSelectInput = ref}} >
@@ -1363,23 +1360,17 @@ if (fAOD !== '') {
       </FormGroup> 
       
       </form>  
-
       <span className="advancedSearch" onClick={this.showAdvancedSearch}> <FaArrowCircleRight /> {this.state.spanShowHide} advanced search</span>
-
 { this.state.collaps ?  
   <div className="container" style={{  width: '1200px', height: '1200px'}}   id="searchResults">
   {/* <Tree data={this.state.myTreeData}  translate={{x:250, y:355}} zoom={0.8} initialDepth={1} separation={{siblings: 0.5}} /> */}
   <iframe src="https://freaksn.github.io/test/" width="1200" height="900" frameBorder="0" title="Collapsible Tree">
-
-
 </iframe>
   </div> 
    : null 
  }
          
-
  <p className = "paragraphSearch" style={divStyle}> </p>
-
  <div className="oneSearch" style={divStyle}>     
       <form className="form-inline" id='formSearch' onSubmit={this.searchSubmit}>
       <FormGroup>
@@ -1394,7 +1385,6 @@ if (fAOD !== '') {
         <option value="film Subject">Film Subject</option>
         <option value="art Director">Art Director</option>
         <option value="favorite Actor of director">Favorite Actor of Director</option>
-
       </FormControl>
       <Button className="SearchBtn" type="submit" bsStyle="default" style={{color:"black", background:"#e6e610"}}>Search <FaSearch /></Button>
       </FormGroup> 
@@ -1413,18 +1403,14 @@ if (fAOD !== '') {
       <Button className="clearButton" style={{ background:"red", color:"#ccccb3"}} onClick={this.clearButton} >  <FaClose /> </Button>
       : null
       }
-
    
     
    </div> {/* end oneSearch  */}
     
    </div>  {/*end InteractiveSearch */}
-
    
     
-
         {/* TO DO if no results found*/}
-
       { this.state.Tooltip ?
       <Popover placement="top" id='popover-positioned-bottom' positionLeft={310} positionTop={285}>
          No results for <strong>"{this.toTitleCase(this.searchInput.value)}"</strong> in category: <strong>"{this.toTitleCase(this.searchSelectInput.value)}"</strong> were found.
@@ -1435,26 +1421,21 @@ if (fAOD !== '') {
    
       
         {/* Buttons for Graph/Table?Charts Visualization */}
-
        { this.state.showButtonGraph ? 
        <Button className="showGraph" type="submit" bsStyle="default" style={{ background:"#a61ea9", color:"#ccccb3"}} onClick={this.buttonsVisualizationsGraphs}>See results as Graph </Button>
       : null
       }
       
         {/* Buttons for Graph/Table/Charts Visualization */}
-
       { this.state.showButtonTable ? 
       <Button className="showTable" type="submit" bsStyle="default" style={{ background:"#a61ea9", color:"#ccccb3"}} onClick={this.buttonsVisualizationsTables}>See results as Table </Button>
       : null
       }   
-
         {/* Buttons for Graph/Table/Charts Visualization */}
-
       { this.state.showButtonCharts ? 
       <Button className="showChart" type="submit" bsStyle="default" style={{ background:"#a61ea9", color:"#ccccb3"}} onClick={this.buttonsVisualizationsCharts}>See results as Chart </Button>
       : null
       }   
-
       { this.state.download ?  
   <Button className="downloadButton" type="submit" bsStyle="default" style={{ background:"white", color:"#ccccb3"}}><CSVLink data={this.state.jsonSave}><FaDownload /> Excel File</CSVLink></Button>
    : null 
@@ -1468,20 +1449,13 @@ if (fAOD !== '') {
        </div> 
         : null 
       }
-
-
       
-
       
      
-
       
       </div> //End Visualization
       
     );
   }
 }
-
 export default Visualization;
-
-
