@@ -396,19 +396,19 @@ buttonsVisualizationsGraphs(e) {
       case 'actor':
         return this.actorsGraph(); 
         
-      case 'actorXActor':
+      case 'actor X Actor':
         return this.actorXactorGraph();
 
-        case 'filmCharacter':
+        case 'film Character':
         return this.filmCharacterGraph();
         
-        case 'filmSubject':
+        case 'film Subject':
         return this.filmSubjectGraph();
 
-        case 'artDirector':
+        case 'art Director':
          return this.artDirectorGraph();
 
-        case 'favoriteActor':
+        case 'favorite Actor of director':
          return this.favoriteActorOfDirectorGraph();
         
 
@@ -435,19 +435,19 @@ buttonsVisualizationsTables(e) {
       case 'actor':
         return this.actorsSubmit(); 
 
-      case 'actorXActor':
+      case 'actor X Actor':
         return this.actorXactorSubmit();
 
-        case 'filmCharacter':
+        case 'film Character':
         return this.filmCharacterSubmit();
 
-        case 'filmSubject':
+        case 'film Subject':
         return this.filmSubjectSubmit();
 
-        case 'artDirector':
+        case 'art Director':
          return this.artDirectorSubmit();
 
-        case 'favoriteActor':
+        case 'favorite Actor':
          return this.favoriteActorOfDirectorSubmit();
 
         default: 
@@ -464,10 +464,10 @@ buttonsVisualizationsCharts(e) {
   switch(selectedSearch) {
     
 
-      case 'favoriteActor':
+      case 'favorite Actor of director':
        return this.favoriteActorOfDirectorChart();
 
-      case 'actorXActor':
+      case 'actor X Actor':
        return this.actorXactorChart();
 
       case 'director':
