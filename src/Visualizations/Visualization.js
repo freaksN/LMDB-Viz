@@ -350,19 +350,19 @@ showAdvancedSearch(e){
       case 'actor':
         return this.actorsSubmit(); 
   
-      case 'actorXActor':
+      case 'actor X Actor':
         return this.actorXactorSubmit();
      
-        case 'filmCharacter':
+        case 'film Character':
          return this.filmCharacterSubmit();
     
-        case 'filmSubject':
+        case 'film Subject':
          return this.filmSubjectSubmit();
     
-        case 'artDirector':
+        case 'art Director':
          return this.artDirectorSubmit();
 
-        case 'favoriteActor':
+        case 'favorite Actor of director':
          return this.favoriteActorOfDirectorSubmit();
 
         default: 
@@ -1389,11 +1389,11 @@ if (fAOD !== '') {
         <option value="movies">Movies</option>
         <option value="director">Director</option>
         <option value="actor">Actors</option>
-        <option value="actorXActor">Actor X Actor</option>
-        <option value="filmCharacter">Film Character</option>
-        <option value="filmSubject">Film Subject</option>
-        <option value="artDirector">Art Director</option>
-        <option value="favoriteActor">Favorite Actor of Director</option>
+        <option value="actor X Actor">Actor X Actor</option>
+        <option value="film Character">Film Character</option>
+        <option value="film Subject">Film Subject</option>
+        <option value="art Director">Art Director</option>
+        <option value="favorite Actor of director">Favorite Actor of Director</option>
 
       </FormControl>
       <Button className="SearchBtn" type="submit" bsStyle="default" style={{color:"black", background:"#e6e610"}}>Search <FaSearch /></Button>
@@ -1404,7 +1404,7 @@ if (fAOD !== '') {
       
       { this.state.ResultsToolTip ?
       <Popover placement="top" id='popover-positioned-top' positionLeft={310} positionTop={285}>
-         Showing results for  <strong>"{this.toTitleCase(this.searchInput.value)}"</strong>
+      <strong>"{this.toTitleCase(this.searchInput.value)}"</strong> in category: <strong>"{this.toTitleCase(this.searchSelectInput.value)}"</strong>
       </Popover>
     
       : null
@@ -1427,7 +1427,7 @@ if (fAOD !== '') {
 
       { this.state.Tooltip ?
       <Popover placement="top" id='popover-positioned-bottom' positionLeft={310} positionTop={285}>
-         No results found for <strong>"{this.toTitleCase(this.searchInput.value)}"</strong>
+         No results for <strong>"{this.toTitleCase(this.searchInput.value)}"</strong> in category: <strong>"{this.toTitleCase(this.searchSelectInput.value)}"</strong> were found.
       </Popover>
      
       : null

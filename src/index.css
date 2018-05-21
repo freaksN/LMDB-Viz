@@ -144,6 +144,7 @@ margin-top: 2%;
 .clearButton {
 margin-left: 47%;
 margin-bottom: 1%;
+margin-top: 7px;
 
 }
 
@@ -176,7 +177,8 @@ background: #e6e610;
 }
 
 #popover-positioned-top {
-  background:#f0e373
+  background:#f0e373;
+  width: 20%; 
  }
 
  #popover-positioned-bottom {
