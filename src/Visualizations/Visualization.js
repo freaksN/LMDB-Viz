@@ -447,7 +447,7 @@ buttonsVisualizationsTables(e) {
         case 'art Director':
          return this.artDirectorSubmit();
 
-        case 'favorite Actor':
+        case 'favorite Actor of director':
          return this.favoriteActorOfDirectorSubmit();
 
         default: 
