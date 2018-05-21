@@ -1324,8 +1324,8 @@ if (fAOD !== '') {
       { this.state.popUpMenu ? 
        <Popover placement="top" id='popover-menu' title="LMDB - VIZ" positionLeft={60} positionTop={10}>
        <div className="Home">
-          <p className="paragraphHome">This App's purpose is the <strong>Multi-Perspective Information Visualization of Linked Data.</strong> </p>
-          <p className="paragraphHome">Under advanced search you can further specify your desired results and choose between types of visualization(Tables, Graph, etc.). In this 0.1 Version you have the option to search for <strong>Movies</strong>, <strong>Directors</strong>, <strong>Actors</strong>, <strong>Actor X Actor - All actors who played with certain Actor</strong>, <strong>Film character names</strong>, <strong>Film  Subjects</strong>, <strong>Art Directors</strong> and <strong>Favorite Actors of Directors</strong>. The information is coming direclty from the <strong>Linked Movie Database</strong> <a href="http://data.linkedmdb.org">LMDB</a>. 
+          <p className="paragraphHome">This App's purpose is the <strong>Multi-Perspective Information Visualization of Linked Data.</strong></p>
+          <p className="paragraphHome">Under advanced search you can further specify your desired results and choose between types of visualization(Tables, Graph, etc.). In this 0.1 version you have the option to search for <strong>Movies</strong>, <strong>Directors</strong>, <strong>Actors</strong>, <strong>Actor X Actor - All actors who played with certain Actor</strong>, <strong>Film character names</strong>, <strong>Film  Subjects</strong>, <strong>Art Directors</strong> and <strong>Favorite Actors of Directors</strong>. The information is coming direclty from the <strong>Linked Movie Database</strong> <a href="http://data.linkedmdb.org">LMDB</a>. 
           </p>
           
            </div> 
