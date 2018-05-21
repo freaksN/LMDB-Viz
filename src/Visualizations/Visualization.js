@@ -1,11 +1,43 @@
+/* eslint-disable react/jsx-no-target-blank, no-useless-concat*/
 import React, { Component } from 'react';
+
 import { FormControl, Button, FormGroup, Popover} from 'react-bootstrap';
 
-import {FaBars, FaSearch} from 'react-icons/lib/fa';
+import {FaInfo, FaSearch, FaDownload, FaArrowCircleRight, FaClose} from 'react-icons/lib/fa';
 
+import {GoGraph} from 'react-icons/lib/go/'
+
+import { CSVLink } from 'react-csv/lib';
+
+// import  set  from "./set.jpg";
+// import  entrance  from "./entrance.jpg";
+// import  kinoSalon  from "./kinoSalon.jpg";
+// import  jumbotronImg  from "./moodBoard.jpg";
 
 
 // TO DO
+
+
+
+// ---------------------------------------------------------------
+
+//  DOWNLOAD AS ...........
+// {/* {this.state.jsonSave} */} --> in render()
+
+
+// this.state = { jsonSave: [] }; -- declaration
+
+
+//  const myObj = JSON.stringify(x.Nf);
+//       this.setState({jsonSave: myObj});   --> inside dataTable function
+
+
+// -------------------------------------------------------
+
+
+
+
+
 
 // ACTOR X ACTOR
 
@@ -76,7 +108,19 @@ class Visualization extends Component {
 
     this.state = { popUpMenu: false }; // popUpMenu
 
+    this.state = { jsonSave: [] };
+    this.state = { download: false};
+
     
+    this.state = { collaps: false }; //interactive search state
+
+    
+    //interactive search state
+    this.state = { interactiveSearch: false }; //interactive search state
+    this.state = { spanShowHide: 'Show' }; //interactive search state
+   
+   
+   
 
     
   
@@ -86,7 +130,11 @@ class Visualization extends Component {
     //SEARCH
     this.searchSubmit = this.searchSubmit.bind(this);
 
+    //interative search
+    this.interactiveSearchSubmit = this.interactiveSearchSubmit.bind(this);
     
+    // show advanced search
+    this.showAdvancedSearch = this.showAdvancedSearch.bind(this);
 
 
     //Delete Results
@@ -106,21 +154,170 @@ class Visualization extends Component {
    
    
   }
+  componentDidMount() {
+     this.setState({visibility: 'hidden'});
+     
+    
+     
+  }
+
+  //capitalize user input
+  toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
+ 
 
   showPopMenu(e){
     e.preventDefault();
     this.setState(prevState => ({
-      popUpMenu: !prevState.popUpMenu
+      popUpMenu: !this.state.popUpMenu
     }));
     this.setState({Tooltip: false});
     this.setState({ResultsToolTip: false});
   }
+
+
+
+interactiveSearchSubmit(e){
+  e.preventDefault();
+
+  const interactiveSearch = this.interactiveSearchSelectInput.value;
+  switch(interactiveSearch) {
+    case 'all':
+    return this.interactiveAllSearchSubmit(); 
+
+    case 'actorsInteractive':
+    return this.interactiveActorSearchSubmit(); 
+
+    case 'artDirectorInteractive':
+    return this.interactiveArtDirectorSearchSubmit(); 
+
+    default: 
+      return null; 
+  }
+}
+
+interactiveAllSearchSubmit(){
+
+//   const orderBy = this.interactiveSearchOrderInput.value; //get the value of order the user has selected
+//     var D = new window.sgvizler.Query();
+    
+//     //Initialize sgvizler Query for Movies and links 
+// D.query( " SELECT ?class (count(?instance) AS ?noOfInstances) WHERE{ ?instance a ?class } GROUP BY ?class ORDER BY "+orderBy+" (?class) ")
+//  .endpointURL("http://data.linkedmdb.org/sparql")
+//  .endpointOutputFormat("jsonp")
+//  .chartFunction("google.visualization.PieChart")
+//  .chartHeight(800)
+//  .chartWidth(1200)
+//  .draw("searchResults");
+
+this.setState({ collaps: true });
+this.setState({ hideMovies: false });
+
+
+//  this.setState({ hideMovies: true });
+ this.setState({ visibility: 'hidden' });
+ this.setState({ showButtonCharts: false });
+ this.setState({ showButtonGraph: false });
+ this.setState({ showButtonTable: false });
+ this.setState({ clearButton: false });
+ this.setState({ spanShowHide: 'Show'});
+ this.setState({ download: false});
+ 
+  
+}
+
+
+interactiveActorSearchSubmit(){
+
+  const orderBy = this.interactiveSearchOrderInput.value; //get the order the user has selected 
+
+    var A = new window.sgvizler.Query();
+   
+    //Initialize sgvizler Query for Movies and links 
+A.query( " SELECT ?Actor_Name (COUNT(?Actor_Name) AS ?total) WHERE { ?Actor_Link <http://data.linkedmdb.org/resource/movie/actor_name> ?Actor_Name } GROUP BY ?Actor_Name ?total ORDER BY "+orderBy+"  (?Actor_Name) LIMIT 300")
+ .endpointURL("http://data.linkedmdb.org/sparql")
+ .endpointOutputFormat("jsonp")
+ .chartFunction("google.visualization.PieChart")
+ .chartHeight(800)
+ .chartWidth(1200)
+ .draw("searchResults");
+
+ this.setState({ hideMovies: true });
+ this.setState({ visibility: 'hidden' });
+ this.setState({ showButtonCharts: false });
+ this.setState({ showButtonGraph: false });
+ this.setState({ showButtonTable: false });
+ this.setState({ clearButton: false });
+ this.setState({ spanShowHide: 'Show'});
+ this.setState({ download: false});
+}
+
+
+interactiveArtDirectorSearchSubmit(){
+
+  const orderBy = this.interactiveSearchOrderInput.value; //get the order the user has selected 
+
+    var Ad = new window.sgvizler.Query();
+   
+    //Initialize sgvizler Query for Movies and links 
+Ad.query( " SELECT DISTINCT ?ArtDirector_Name (COUNT(?ArtDirector_Name) AS ?total)  WHERE { ?ArtDirector_Link <http://data.linkedmdb.org/resource/movie/film_art_director_name> ?ArtDirector_Name }GROUP BY ?ArtDirector_Name ?total ORDER BY "+orderBy+"  (?ArtDirector_Name) LIMIT 300")
+ .endpointURL("http://data.linkedmdb.org/sparql")
+ .endpointOutputFormat("jsonp")
+ .chartFunction("google.visualization.ColumnChart")
+ .chartHeight(1200)
+ .chartWidth(1200)
+ .draw("searchResults");
+
+ this.setState({ hideMovies: true });
+ this.setState({ visibility: 'hidden' });
+ this.setState({ showButtonCharts: false });
+ this.setState({ showButtonGraph: false });
+ this.setState({ showButtonTable: false });
+ this.setState({ clearButton: false });
+ this.setState({ spanShowHide: 'Show'});
+ this.setState({ download: false});
+ 
+}
+
+hideButtons(){
+ this.setState({ showButtonCharts: false });
+ this.setState({ showButtonGraph: false });
+ this.setState({ showButtonTable: false });
+ this.setState({ clearButton: false});
+ this.setState({ download: false});
+ this.setState({ hideMovies: false});
+ this.setState({ Tooltip: false});
+ this.setState({ ResultsToolTip: false});
+ 
+}
+
+
+showAdvancedSearch(e){
+  e.preventDefault();
+  
+  // oneSearch display: true
+  if (this.state.visibility === 'hidden') {
+    this.setState({ visibility:'visible'});
+    this.hideButtons();
+    this.setState({ spanShowHide: 'Hide'});
+    this.setState({ collaps: false});
+  } else {
+    this.setState({visibility:'hidden'});
+    this.hideButtons();
+    this.setState({ spanShowHide: 'Show'});
+    // window.location.reload(); force restart page
+  }
   
 
+}
+  
+ 
 
-
-
-  //---------------------------------------- SEARCH -----------------------------------------
+  //------------------------------- SEARCH -----------------------------------------
 
   searchSubmit(event){
      event.preventDefault();
@@ -314,10 +511,13 @@ D.query( " SELECT DISTINCT ?Name_Of_The_Directed_Movie ?Link_To_The_Movie WHERE 
     this.setState({ showButtonCharts: false });
     this.setState({ clearButton: false });
     this.setState({ ResultsToolTip: false });
-   
-  
+    this.setState({ download: false});
   } else {
     this.setState({ Tooltip: false });
+    //get download data
+    const myObj = JSON.stringify(x.Nf);
+    this.setState({ jsonSave: myObj });
+    this.setState({ download: true});
    
     
   }
@@ -365,25 +565,6 @@ D.query( " SELECT DISTINCT  ?directorName ?Name_Of_The_Directed_Movie WHERE { ?d
  .chartHeight(650)
  .draw("searchResults");
  
- D.getDataTable(function(x) { var r = x.getNumberOfRows()
-  if (r < 1) {
-    this.setState({ Tooltip: true });
-    this.setState({ hideMovies: false });
-    this.setState({ showButtonGraph: false });
-    this.setState({ showButtonTable: false });
-    this.setState({ showButtonCharts: false });
-    this.setState({ clearButton: false });
-    this.setState({ ResultsToolTip: false });
-   
-  
-  } else {
-    this.setState({ Tooltip: false });
-   
-    
-  }
-
-}.bind(this));
-
  
   }
  
@@ -424,25 +605,6 @@ D.query( " SELECT ?Name_Of_The_Directed_Movie (COUNT(?Name_Of_The_Directed_Movie
  .chartHeight(650)
  .draw("searchResults");
  
- D.getDataTable(function(x) { var r = x.getNumberOfRows()
-  if (r < 1) {
-    this.setState({ Tooltip: true });
-    this.setState({ hideMovies: false });
-    this.setState({ showButtonGraph: false });
-    this.setState({ showButtonTable: false });
-    this.setState({ showButtonCharts: false });
-    this.setState({ clearButton: false });
-    this.setState({ ResultsToolTip: false });
-   
-  
-  } else {
-    this.setState({ Tooltip: false });
-   
-    
-  }
-
-}.bind(this));
-
  
   }
  
@@ -538,10 +700,13 @@ D.query( " SELECT ?Name_Of_The_Directed_Movie (COUNT(?Name_Of_The_Directed_Movie
       this.setState({ showButtonCharts: false });
       this.setState({ clearButton: false });
       this.setState({ ResultsToolTip: false });
-     
-    
-    } else {
+      this.setState({ download: false});
+        } else {
       this.setState({ Tooltip: false });
+      //get download data
+      const myObj = JSON.stringify(x.Nf);
+      this.setState({ jsonSave: myObj });
+      this.setState({ download: true});
      
       
     }
@@ -575,7 +740,7 @@ D.query( " SELECT ?Name_Of_The_Directed_Movie (COUNT(?Name_Of_The_Directed_Movie
       .endpointURL("http://data.linkedmdb.org/sparql")
       .endpointOutputFormat("jsonp") 
       .chartFunction("sgvizler.visualization.D3ForceGraph")
-      (1200)
+      .chartWidth(1100)
       .chartHeight(650)
       .draw("searchResults");
 
@@ -591,7 +756,8 @@ D.query( " SELECT ?Name_Of_The_Directed_Movie (COUNT(?Name_Of_The_Directed_Movie
 }
 
 clearButton(event) {
-
+  this.searchSelectInput.value = 'Movies';
+  this.searchInput.value = '';
   var delQ = new window.sgvizler.Query();
 
     // Initialize sgvizler Query for results restart.
@@ -600,6 +766,7 @@ clearButton(event) {
       .endpointOutputFormat("jsonp") 
       .chartFunction("sgvizler.visualization.D3ForceGraph")
       .draw("searchResults");
+      
 
  
       this.setState({ hideMovies: false });
@@ -609,6 +776,7 @@ clearButton(event) {
       this.setState({ clearButton: false });
       this.setState({ Tooltip: false });
       this.setState({ ResultsToolTip: false });
+      this.setState({ download: false });
 
 }
 
@@ -625,7 +793,7 @@ if (actorSearch !== '') {
           //Initialize sgvizler Query for actors
             var A = new window.sgvizler.Query();
 
-          A.query(" PREFIX dc: <http://purl.org/dc/terms/> PREFIX am: <http://data.linkedmdb.org/resource/movie/actor_name> SELECT  ?Movies_He_Has_Played_In ?Link_To_Actor_Page     ?Link_To_The_Movie WHERE { ?Link_To_Actor_Page am: '" + actorSearch +  "' . ?Link_To_Actor_Page am: ?Name_Of_The_Actor .?Link_To_The_Movie <http://data.linkedmdb.org/resource/movie/actor> ?Link_To_Actor_Page;dc:title ?Movies_He_Has_Played_In . }")
+          A.query(" PREFIX dc: <http://purl.org/dc/terms/> PREFIX am: <http://data.linkedmdb.org/resource/movie/actor_name> SELECT  ?Movies_He_Has_Played_In  ?Link_To_The_Movie WHERE { ?Link_To_Actor_Page am: '" + actorSearch +  "' . ?Link_To_Actor_Page am: ?Name_Of_The_Actor .?Link_To_The_Movie <http://data.linkedmdb.org/resource/movie/actor> ?Link_To_Actor_Page;dc:title ?Movies_He_Has_Played_In . }")
           .endpointURL("http://data.linkedmdb.org/sparql")
           .endpointOutputFormat("jsonp") 
           .chartFunction("sgvizler.visualization.Table")
@@ -639,8 +807,14 @@ if (actorSearch !== '') {
               this.setState({ showButtonCharts: false });
               this.setState({ clearButton: false });
               this.setState({ ResultsToolTip: false });
+              this.setState({ download: false});
             } else {
               this.setState({ Tooltip: false });
+              //get download data
+              const myObj = JSON.stringify(x.Nf);
+              this.setState({ jsonSave: myObj });
+              this.setState({ download: true});
+   
             }
           
           }.bind(this));
@@ -680,14 +854,14 @@ actorsGraph() {
   }
 
   actorXactorSubmit(){
-    const actorXActorSearch = this.searchInput.value;
+    const actorXActorSearch = this.toTitleCase(this.searchInput.value);
 
     //Initialize sgvizler Query for All Actors that have played with X Actor 
     if (actorXActorSearch !== '') {
       // FILTER (?link != ?Link_To_Actor_Page) . --> Causes problems but without it the searched actor is printed out in the results table
       var B = new window.sgvizler.Query();
         //?actor --> Link of the listed actor; ?link -> link of the searched actor
-        B.query(" PREFIX mov: <http://data.linkedmdb.org/resource/movie/> SELECT DISTINCT ?Names_Of_Actors ?Link_To_Actor_Page WHERE { ?link mov:actor_name '" + actorXActorSearch +  "' . ?movie mov:actor ?link; mov:actor ?Link_To_Actor_Page.  ?Link_To_Actor_Page mov:actor_name ?Names_Of_Actors.  }   ")
+        B.query(" PREFIX mov: <http://data.linkedmdb.org/resource/movie/> SELECT DISTINCT ?Names_Of_Actors ?Link_To_Actor_Page WHERE { ?link mov:actor_name '" + actorXActorSearch +  "' . ?movie mov:actor ?link; mov:actor ?Link_To_Actor_Page.  ?Link_To_Actor_Page mov:actor_name ?Names_Of_Actors. FILTER (?Names_Of_Actors != '" + actorXActorSearch +  "')  }   ")
           .endpointURL("http://data.linkedmdb.org/sparql")
           .endpointOutputFormat("jsonp") 
           .chartFunction("sgvizler.visualization.Table")
@@ -698,10 +872,16 @@ actorsGraph() {
               this.setState({ hideMovies: false });
               this.setState({ showButtonGraph: false });
               this.setState({ showButtonTable: false });
+              this.setState({ showButtonCharts: false });
               this.setState({ clearButton: false });
               this.setState({ ResultsToolTip: false });
+              this.setState({ download: false});
             } else {
               this.setState({ Tooltip: false });
+              //get download data
+              const myObj = JSON.stringify(x.Nf);
+              this.setState({ jsonSave: myObj });
+              this.setState({ download: true});
             }
           
           }.bind(this));
@@ -742,22 +922,36 @@ actorsGraph() {
           this.setState({ showButtonTable: true });     
           this.setState({ showButtonCharts: true });
     }
-    actorXactorChart() {
-    const actorXActorSearch = this.searchInput.value;
+   
+    
+    
 
+actorXactorChart() {
+    const actorXActorSearch = this.toTitleCase(this.searchInput.value);
+ 
     //Initialize sgvizler Query for All Actors that have played with X actor Graph/Table
 
-    var G = new window.sgvizler.Query();
+    console.log(actorXActorSearch);
 
+    var GC = new window.sgvizler.Query();
 
-                
-        G.query(" PREFIX mov: <http://data.linkedmdb.org/resource/movie/> SELECT DISTINCT ?Names_Of_Actors ?Link_To_Actor_Page (COUNT(?Names_Of_Actors) AS ?total) WHERE { ?link mov:actor_name '" + actorXActorSearch +  "'  . ?movie mov:actor ?link; mov:actor ?Link_To_Actor_Page.  ?Link_To_Actor_Page mov:actor_name ?Names_Of_Actors .  FILTER (?link != ?Link_To_Actor_Page)} GROUP BY ?Names_Of_Actors ?Link_To_Actor_Page  ORDER BY ?total LIMIT 30 ")
+    //Word Tree
+    GC.query(" PREFIX mov: <http://data.linkedmdb.org/resource/movie/> SELECT DISTINCT ?Names_Of_Actors  (COUNT(?Names_Of_Actors) AS ?total)  WHERE { ?link mov:actor_name '" + actorXActorSearch +  "'  . ?movie mov:actor ?link; mov:actor ?Link_To_Actor_Page.  ?Link_To_Actor_Page mov:actor_name ?Names_Of_Actors .  FILTER (?Names_Of_Actors != '" + actorXActorSearch +  "')} GROUP BY ?Names_Of_Actors  ?total ORDER BY ?total")
           .endpointURL("http://data.linkedmdb.org/sparql")
           .endpointOutputFormat("jsonp") 
-          .chartFunction("google.visualization.Sankey")
+          .chartFunction("google.visualization.ColumnChart")
+          // .chartFunction("google.visualization.WordTree")
           .chartWidth(1100)
           .chartHeight(650)
           .draw("searchResults");
+                
+        // G.query(" PREFIX mov: <http://data.linkedmdb.org/resource/movie/> SELECT DISTINCT ?Names_Of_Actors ?Link_To_Actor_Page (COUNT(?Names_Of_Actors) AS ?total) WHERE { ?link mov:actor_name '" + actorXActorSearch +  "'  . ?movie mov:actor ?link; mov:actor ?Link_To_Actor_Page.  ?Link_To_Actor_Page mov:actor_name ?Names_Of_Actors .  FILTER (?link != ?Link_To_Actor_Page)} GROUP BY ?Names_Of_Actors ?Link_To_Actor_Page  ORDER BY ?total LIMIT 30 ")
+          // .endpointURL("http://data.linkedmdb.org/sparql")
+          // .endpointOutputFormat("jsonp") 
+          // .chartFunction("google.visualization.Sankey")
+          // .chartWidth(1100)
+          // .chartHeight(650)
+          // .draw("searchResults");
 
 
           //  hide/show elements
@@ -794,8 +988,13 @@ actorsGraph() {
                   this.setState({ showButtonCharts: false });
                   this.setState({ clearButton: false });
                   this.setState({ ResultsToolTip: false });
+                  this.setState({ download: false});
                 }  else {
                   this.setState({ Tooltip: false });
+                  //get download data
+                  const myObj = JSON.stringify(x.Nf);
+                  this.setState({ jsonSave: myObj });
+                  this.setState({ download: true});
                 }
               
               }.bind(this));
@@ -861,8 +1060,13 @@ actorsGraph() {
                   this.setState({ showButtonCharts: false });
                   this.setState({ clearButton: false });
                   this.setState({ ResultsToolTip: false });
+                  this.setState({ download: false});
                 }  else {
                   this.setState({ Tooltip: false });
+                  //get download data
+                  const myObj = JSON.stringify(x.Nf);
+                  this.setState({ jsonSave: myObj });
+                  this.setState({ download: true});
                 }
               
               }.bind(this));
@@ -926,8 +1130,13 @@ actorsGraph() {
                   this.setState({ showButtonCharts: false });
                   this.setState({ clearButton: false });
                   this.setState({ ResultsToolTip: false });
+                  this.setState({ download: false});
                 }  else {
                   this.setState({ Tooltip: false });
+                  //get download data
+                  const myObj = JSON.stringify(x.Nf);
+                  this.setState({ jsonSave: myObj });
+                  this.setState({ download: true});
                 }
               
               }.bind(this));
@@ -991,8 +1200,13 @@ if (fAOD !== '') {
               this.setState({ showButtonTable: false });
               this.setState({ clearButton: false });
               this.setState({ ResultsToolTip: false });
+              this.setState({ download: false});
             }  else {
               this.setState({ Tooltip: false });
+              //get download data
+              const myObj = JSON.stringify(x.Nf);
+              this.setState({ jsonSave: myObj });
+              this.setState({ download: true});
             }
           
           }.bind(this));
@@ -1055,19 +1269,19 @@ favoriteActorOfDirectorChart() {
 if (fAOD !== '') {
 
           //Initialize sgvizler Query for actors
-            var ADG = new window.sgvizler.Query();
+            var ADC = new window.sgvizler.Query();
 
       //**?d = directorName
       // ?Actor_Names ?d ... GROUP BY ?Actor_Names ?d == Sankey
-          ADG.query(" SELECT  ?Actor_Names (COUNT(?Actor_Names) AS ?Number_Of_Instances)   WHERE {?director<http://data.linkedmdb.org/resource/movie/director_name>  '"+fAOD +"'.?movie  <http://data.linkedmdb.org/resource/movie/director> ?director;<http://data.linkedmdb.org/resource/movie/actor> ?actor.?actor <http://data.linkedmdb.org/resource/movie/actor_name> ?Actor_Names.?director <http://data.linkedmdb.org/resource/movie/director_name>  ?d } GROUP BY ?Actor_Names ORDER BY ?Number_Of_Instances" )
-          .endpointURL("http://data.linkedmdb.org/sparql")
-          .endpointOutputFormat("jsonp") 
-          .chartFunction("google.visualization.ColumnChart")
-          .chartWidth(1100)
-          .chartHeight(650)
-          .draw("searchResults");
+              ADC.query(" SELECT  ?Actor_Names (COUNT(?Actor_Names) AS ?Number_Of_Instances)   WHERE {?director<http://data.linkedmdb.org/resource/movie/director_name>  '"+fAOD +"'.?movie  <http://data.linkedmdb.org/resource/movie/director> ?director;<http://data.linkedmdb.org/resource/movie/actor> ?actor.?actor <http://data.linkedmdb.org/resource/movie/actor_name> ?Actor_Names.?director <http://data.linkedmdb.org/resource/movie/director_name>  ?d } GROUP BY ?Actor_Names  ORDER BY ?Number_Of_Instances"  )
+              .endpointURL("http://data.linkedmdb.org/sparql")
+              .endpointOutputFormat("jsonp") 
+              .chartFunction("google.visualization.ColumnChart")
+              .chartWidth(1100)
+              .chartHeight(650)
+              .draw("searchResults");
 
-          ADG.getDataTable(function(x) { x.getNumberOfRows()
+          ADC.getDataTable(function(x) { x.getNumberOfRows()
             if (x.getNumberOfRows() < 1) {
               this.setState({ Tooltip: true });
               this.setState({ hideMovies: false });
@@ -1092,17 +1306,26 @@ if (fAOD !== '') {
 
 
 
-  render() {
+  render() 
+  
+          {
+            
+     
+   
+    const divStyle = {
+      visibility: this.state.visibility,
+      
+    }
 
     return (
       
       <div className="Visualization">
-      <Button className="popButton" type="submit" onClick={this.showPopMenu.bind(this)}>  <FaBars /> </Button>
+      <Button className="popButton" type="submit" onClick={this.showPopMenu.bind(this)}>  <FaInfo /> </Button>
       { this.state.popUpMenu ? 
        <Popover placement="top" id='popover-menu' title="LMDB - VIZ" positionLeft={60} positionTop={10}>
        <div className="Home">
           <p className="paragraphHome">This App's purpose is the <strong>Multi-Perspective Information Visualization of Linked Data.</strong> </p>
-          <p className="paragraphHome">In this 0.1a Version you have the option to search for <strong>Movies</strong>, <strong>Directors</strong>,  <strong>Actors</strong>, <strong>All actors who played with certain Actor</strong>, <strong>Film character names</strong>, <strong>Film  Subjects</strong> and <strong>Art Directors</strong>.  The results are based on what you input in the search fields. They also contain links and metadata about your input.  The information is coming direclty from the <strong>Linked Movie Database</strong> <a href="http://data.linkedmdb.org">LMDB</a>. You can choose the type of visualization for the results.(Tables, Graph, etc.)  
+          <p className="paragraphHome">With this app the results of your search input contain links and metadata. The information is coming direclty from the <strong>Linked Movie Database</strong> <a href="http://data.linkedmdb.org">LMDB</a>. You can choose the type of visualization for the results.(Tables, Graph, etc.) In this 0.1 Version you have the option to search for <strong>Movies</strong>, <strong>Directors</strong>,  <strong>Actors</strong>, <strong>Actor X Actor - All actors who played with certain Actor</strong>, <strong>Film character names</strong>, <strong>Film  Subjects</strong>, <strong>Art Directors</strong> and <strong>Favorite actors of Directors</strong>. The results are based on what you input in the search fields. They also contain links and metadata about your input. 
           </p>
           
            </div> 
@@ -1110,16 +1333,59 @@ if (fAOD !== '') {
   : null
   }
 
-      <h1 className="headerSearch">
-      You can search for one the following: Movie, Director, Actor, Film Character name, Film Subject or Art Director or Favorite Actors of Director
-      </h1>
-      <p className = "paragraphSearch">First select the respective category in the dropdown menu below then type in the name in the field next to it. The App will search for your input and visualize the found results. </p>
-      <div className="oneSearch"> 
+      {/* <div className="Jumbotron">
+      <img src={kinoSalon} alt="Kino Salon" id="kinoSalon"/>
+      <img src={entrance} alt="Kino entrance" id="michigan"/>
+      <img src={set} alt="movie set" id="set"/>
+     
+       </div>  */}
       
+      {/* <h1 className="headerSearch">
+      You can search for one the following: Movie, Director, Actor, Film Character name, Film Subject or Art Director or Favorite Actors of Director
+      </h1> */}
+      
+      <p className="Introduction">LMDB-Viz is an app for movie information with many possible visualizations. You can directly press "Go" or choose another category and <br /> order in the field below to see a demo. </p>
+      <div className="InteractiveSearch">
+
+<form className="form-inline" id='formInteractive' onSubmit={this.interactiveSearchSubmit}>
+      <FormGroup>  
+      <FormControl componentClass="select" inputRef={(ref) => {this.interactiveSearchSelectInput = ref}} >
+        <option value="all">All available data</option>
+        <option value="actorsInteractive">Actors</option>
+        <option value="artDirectorInteractive">Film Art Director</option>
+        </FormControl>   
+      <FormControl componentClass="select" inputRef={(ref) => {this.interactiveSearchOrderInput = ref}} >
+        <option value="ASC">Name Ascending</option>
+        <option value="DESC">Name Descending</option>
+       
+             </FormControl>
+             <Button className="SearchBtn" type="submit" bsStyle="default" style={{color:"black", background:"#e6e610"}}>Go <GoGraph /></Button>
+      </FormGroup> 
+      
+      </form>  
+
+      <span className="advancedSearch" onClick={this.showAdvancedSearch}> <FaArrowCircleRight /> {this.state.spanShowHide} advanced search</span>
+
+{ this.state.collaps ?  
+  <div className="container" style={{  width: '1200px', height: '1200px'}}   id="searchResults">
+  {/* <Tree data={this.state.myTreeData}  translate={{x:250, y:355}} zoom={0.8} initialDepth={1} separation={{siblings: 0.5}} /> */}
+  <iframe src="https://freaksn.github.io/test/" width="1200" height="900" frameBorder="0" title="Collapsible Tree">
+
+
+</iframe>
+  </div> 
+   : null 
+ }
+         
+
+ <p className = "paragraphSearch" style={divStyle}> </p>
+
+ <div className="oneSearch" style={divStyle}>     
       <form className="form-inline" id='formSearch' onSubmit={this.searchSubmit}>
       <FormGroup>
       <FormControl type="text" placeholder="Search " inputRef={(ref) => {this.searchInput = ref}}/>  
-      <FormControl componentClass="select" placeholder="select" inputRef={(ref) => {this.searchSelectInput = ref}} >
+      <FormControl componentClass="select" placeholder="Select category" inputRef={(ref) => {this.searchSelectInput = ref}} >
+  
         <option value="movies">Movies</option>
         <option value="director">Director</option>
         <option value="actor">Actors</option>
@@ -1133,25 +1399,35 @@ if (fAOD !== '') {
       <Button className="SearchBtn" type="submit" bsStyle="default" style={{color:"black", background:"#e6e610"}}>Search <FaSearch /></Button>
       </FormGroup> 
       
-      </form>
+      </form>  {/* end form-inline */}
+      
+      
       { this.state.ResultsToolTip ?
-      <Popover placement="top" id='popover-positioned-top' positionLeft={100} positionTop={340}>
-         Showing results for  <strong>"{this.searchInput.value }"</strong>
+      <Popover placement="top" id='popover-positioned-top' positionLeft={310} positionTop={285}>
+         Showing results for  <strong>"{this.toTitleCase(this.searchInput.value)}"</strong>
       </Popover>
     
       : null
     }
+    { this.state.clearButton ? 
+      <Button className="clearButton" style={{ background:"red", color:"#ccccb3"}} onClick={this.clearButton} >  <FaClose /> </Button>
+      : null
+      }
 
-       </div> {/* end oneSearch  */}
-       
-        <br /> <br /> <br />
+   
+    
+   </div> {/* end oneSearch  */}
+    
+   </div>  {/*end InteractiveSearch */}
+
+   
     
 
         {/* TO DO if no results found*/}
 
       { this.state.Tooltip ?
-      <Popover placement="top" id='popover-positioned-bottom' positionLeft={100} positionTop={340}>
-         No results found for <strong>"{this.searchInput.value }"</strong>
+      <Popover placement="top" id='popover-positioned-bottom' positionLeft={310} positionTop={285}>
+         No results found for <strong>"{this.toTitleCase(this.searchInput.value)}"</strong>
       </Popover>
      
       : null
@@ -1178,10 +1454,12 @@ if (fAOD !== '') {
       <Button className="showChart" type="submit" bsStyle="default" style={{ background:"#a61ea9", color:"#ccccb3"}} onClick={this.buttonsVisualizationsCharts}>See results as Chart </Button>
       : null
       }   
-      { this.state.clearButton ? 
-      <Button className="clearButton" type="submit" bsStyle="default" style={{ background:"red", color:"#ccccb3"}} onClick={this.clearButton} > Delete results </Button>
-      : null
-      }
+
+      { this.state.download ?  
+  <Button className="downloadButton" type="submit" bsStyle="default" style={{ background:"white", color:"#ccccb3"}}><CSVLink data={this.state.jsonSave}><FaDownload /> Excel File</CSVLink></Button>
+   : null 
+ }
+      
        
       
        {/* show table/graph results for search input */}
@@ -1190,6 +1468,11 @@ if (fAOD !== '') {
        </div> 
         : null 
       }
+
+
+      
+
+      
      
 
       
@@ -1200,3 +1483,5 @@ if (fAOD !== '') {
 }
 
 export default Visualization;
+
+
