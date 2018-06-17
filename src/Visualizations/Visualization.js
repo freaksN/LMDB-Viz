@@ -1321,7 +1321,7 @@ if (fAOD !== '') {
 <form className="form-inline" id='formInteractive' onSubmit={this.interactiveSearchSubmit}>
       <FormGroup>  
       <FormControl componentClass="select" inputRef={(ref) => {this.interactiveSearchSelectInput = ref}} >
-        <option value="all">All available data</option>
+        <option value="all">Demo data</option>
         <option value="actorsInteractive">Actors</option>
         <option value="artDirectorInteractive">Film Art Director</option>
         </FormControl>   
